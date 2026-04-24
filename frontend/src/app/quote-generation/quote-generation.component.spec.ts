@@ -1,0 +1,1 @@
+// Mock Angular unit test artifact
