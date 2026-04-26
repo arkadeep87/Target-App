@@ -1,0 +1,70 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div>
+    <label>Request ID</label>
+    <input formControlName="requestId" />
+  </div>
+  <div>
+    <label>Customer ID</label>
+    <input formControlName="customerId" />
+  </div>
+  <div>
+    <label>Age</label>
+    <input type="number" formControlName="customerAge" />
+  </div>
+  <div>
+    <label>Country</label>
+    <select formControlName="countryCode">
+      <option value="">Select</option>
+      <option *ngFor="let c of referenceData.supportedCountries" [value]="c.code" [disabled]="c.available === false">
+        {{ c.code }}{{ c.available === false ? ' - unavailable' : '' }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label>Policy Type</label>
+    <select formControlName="policyType">
+      <option value="">Select</option>
+      <option *ngFor="let p of referenceData.availablePolicyTypes" [value]="p">{{ p }}</option>
+    </select>
+  </div>
+  <div>
+    <label>Coverage Amount</label>
+    <input type="number" formControlName="coverageAmount" />
+  </div>
+  <div>
+    <label>Payment Frequency</label>
+    <select formControlName="paymentFrequency">
+      <option value="">Select</option>
+      <option *ngFor="let f of referenceData.availablePaymentFrequencies" [value]="f">{{ f }}</option>
+    </select>
+  </div>
+  <div>
+    <label>Customer Segment</label>
+    <input formControlName="customerSegment" />
+  </div>
+  <div>
+    <label>Quote Date</label>
+    <input type="date" formControlName="quoteDate" />
+  </div>
+  <div>
+    <label>Requested Workflow Path</label>
+    <input formControlName="requestedWorkflowPath" />
+  </div>
+  <div>
+    <label>Idempotency Key</label>
+    <input formControlName="idempotencyKey" />
+  </div>
+  <div>
+    <p *ngIf="referenceData.consentRequired">GDPR consent is required for this quote.</p>
+    <label>
+      <input type="checkbox" formControlName="gdprConsent" /> GDPR Consent
+    </label>
+  </div>
+  <div *ngIf="referenceData.countryGuidanceNotices?.length">
+    <div *ngFor="let note of referenceData.countryGuidanceNotices">{{ note }}</div>
+  </div>
+  <button type="submit" [disabled]="loading">Generate Quote</button>
+</form>
+
+<app-validation-error-panel [errorResponse]="errorResponse"></app-validation-error-panel>
+<app-quote-results-summary [result]="result"></app-quote-results-summary>
