@@ -1,16 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { QuoteRequest } from '../models/quote-request.model';
-import { QuoteResponse } from '../models/quote-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class QuoteApiService {
-  private readonly baseUrl = '/api/v1/quotes';
+  constructor(private http: HttpClient) {}
 
-  constructor(private readonly http: HttpClient) {}
+  generateQuote(payload: any): Observable<any> {
+    return this.http.post('/api/quotes', payload);
+  }
 
-  generateQuote(payload: QuoteRequest): Observable<QuoteResponse> {
-    return this.http.post<QuoteResponse>(`${this.baseUrl}/generate`, payload);
+  getQuote(quoteId: string): Observable<any> {
+    return this.http.get(`/api/quotes/${quoteId}`);
+  }
+
+  getQuoteTrace(quoteId: string): Observable<any> {
+    return this.http.get(`/api/quotes/${quoteId}/trace`);
+  }
+
+  getReferenceData(countryCode?: string, quoteDate?: string): Observable<any> {
+    let params = new HttpParams();
+    if (countryCode) params = params.set('countryCode', countryCode);
+    if (quoteDate) params = params.set('quoteDate', quoteDate);
+    return this.http.get('/api/quotes/reference-data', { params });
   }
 }
