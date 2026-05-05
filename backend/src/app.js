@@ -1,9 +1,11 @@
 const express = require('express');
-const { quoteRouter } = require('./routes/quote.routes');
+const quoteRoutes = require('./routes/quoteRoutes');
 
-const app = express();
+function createApp(deps) {
+  const app = express();
+  app.use(express.json());
+  app.use('/api/quotes', quoteRoutes(deps));
+  return app;
+}
 
-app.use(express.json());
-app.use('/api/v1/quotes', quoteRouter);
-
-module.exports = { app };
+module.exports = { createApp };
