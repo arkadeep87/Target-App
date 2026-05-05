@@ -1,0 +1,4 @@
+<section *ngIf="visible" class="message-banner" [attr.data-status]="status">
+  <strong *ngIf="outcomeCode">{{ outcomeCode }}</strong>
+  <span>{{ message }}</span>
+</section>

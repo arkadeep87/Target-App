@@ -1,0 +1,50 @@
+<app-validation-message-banner
+  [message]="structuralMessage || result?.businessMessage || ''"
+  [outcomeCode]="result?.businessOutcomeCode || ''"
+  [status]="(result?.status as any) || 'VALIDATION'">
+</app-validation-message-banner>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>Customer Identifier <input formControlName="customerId" /></label>
+  <label>Age <input type="number" formControlName="customerAge" /></label>
+
+  <label>Country
+    <select formControlName="countryCode">
+      <option value="">Select</option>
+      <option *ngFor="let country of referenceData?.supportedCountries" [value]="country.countryCode">
+        {{ country.displayName }}
+      </option>
+    </select>
+  </label>
+
+  <label>Policy Type
+    <select formControlName="policyType">
+      <option value="">Select</option>
+      <option *ngFor="let policyType of referenceData?.availablePolicyTypes" [value]="policyType">{{ policyType }}</option>
+    </select>
+  </label>
+
+  <label>Coverage Amount <input type="number" formControlName="coverageAmount" /></label>
+  <small>{{ coverageGuidance }}</small>
+  <small *ngIf="outOfRangeHint">{{ outOfRangeHint }}</small>
+
+  <label>Payment Frequency
+    <select formControlName="paymentFrequency">
+      <option value="">Select</option>
+      <option *ngFor="let frequency of referenceData?.availablePaymentFrequencies" [value]="frequency">{{ frequency }}</option>
+    </select>
+  </label>
+
+  <label>Customer Segment <input formControlName="customerSegment" /></label>
+
+  <fieldset>
+    <legend>GDPR Consent</legend>
+    <label><input type="radio" formControlName="consentStatus" value="CONSENTED" /> Consented</label>
+    <label><input type="radio" formControlName="consentStatus" value="DECLINED" /> Declined</label>
+    <label><input type="radio" formControlName="consentStatus" value="MISSING" /> Missing</label>
+  </fieldset>
+
+  <button type="submit" [disabled]="loading">Generate Quote</button>
+</form>
+
+<app-quote-result-view *ngIf="result" [result]="result"></app-quote-result-view>

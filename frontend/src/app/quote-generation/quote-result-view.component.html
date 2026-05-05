@@ -1,0 +1,29 @@
+<section *ngIf="result">
+  <h2>Quote Result</h2>
+  <div>Quote ID: {{ result.quoteId }}</div>
+  <div>Status: {{ result.status }}</div>
+  <div>Outcome: {{ result.businessMessage }}</div>
+
+  <ng-container *ngIf="result.pricingBreakdown as p">
+    <div>Base Premium: {{ p.basePremium }}</div>
+    <div>Risk Factor: {{ p.riskFactor }}</div>
+    <div>Discount Amount: {{ p.discountAmount }}</div>
+    <div>Tax Amount: {{ p.taxAmount }}</div>
+    <div>Premium After Core Rules: {{ p.premiumAfterCoreRules }}</div>
+    <div>Country Adjustment Amount: {{ p.countryAdjustmentAmount }}</div>
+    <div>Payment Frequency Surcharge: {{ p.paymentFrequencySurchargeAmount }}</div>
+    <div>Final Premium: {{ p.finalPremium }}</div>
+
+    <h3>Charge Lines</h3>
+    <div *ngFor="let line of chargeLines">
+      <span>{{ line.sequenceNumber }}.</span>
+      <span>{{ line.chargeType }}</span>
+      <span>{{ line.chargeSubtype }}</span>
+      <span>{{ line.amount }}</span>
+      <span>{{ line.businessDescription }}</span>
+    </div>
+  </ng-container>
+
+  <div>Underwriting Status: {{ result.underwritingStatus }}</div>
+  <app-country-breakdown-panel [result]="result"></app-country-breakdown-panel>
+</section>

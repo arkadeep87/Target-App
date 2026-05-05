@@ -1,0 +1,34 @@
+<section *ngIf="result?.countryCode === 'ES'">
+  <h3>Spain Breakdown</h3>
+  <div *ngFor="let line of linesByCountrySubtypes(['ES_'])">{{ line.chargeSubtype }} - {{ line.amount }}</div>
+</section>
+
+<section *ngIf="result?.countryCode === 'DE'">
+  <h3>Germany Breakdown</h3>
+  <div *ngFor="let line of linesByCountrySubtypes(['DE_'])">{{ line.chargeSubtype }} - {{ line.amount }}</div>
+  <div>Tax Amount: {{ result?.pricingBreakdown?.taxAmount }}</div>
+</section>
+
+<section *ngIf="result?.countryCode === 'IT'">
+  <h3>Italy Breakdown</h3>
+  <div *ngFor="let line of linesByCountrySubtypes(['IT_'])">{{ line.chargeSubtype }} - {{ line.amount }}</div>
+  <div>Tax Amount: {{ result?.pricingBreakdown?.taxAmount }}</div>
+</section>
+
+<section *ngIf="result?.countryCode === 'PT'">
+  <h3>Portugal Breakdown</h3>
+  <div *ngFor="let line of linesByCountrySubtypes(['PT_'])">{{ line.chargeSubtype }} - {{ line.amount }}</div>
+  <div>Tax Amount: {{ result?.pricingBreakdown?.taxAmount }}</div>
+</section>
+
+<section *ngIf="result?.countryCode === 'CH'">
+  <h3>Switzerland Breakdown</h3>
+  <div *ngFor="let line of linesByCountrySubtypes(['CH_'])">{{ line.chargeSubtype }} - {{ line.amount }}</div>
+  <div>Tax Amount: {{ result?.pricingBreakdown?.taxAmount }}</div>
+</section>
+
+<section *ngIf="result?.countryCode === 'GB'">
+  <h3>United Kingdom Breakdown</h3>
+  <div *ngFor="let line of linesByCountrySubtypes(['GB_'])">{{ line.chargeSubtype }} - {{ line.amount }}</div>
+  <div>Tax Amount: {{ result?.pricingBreakdown?.taxAmount }}</div>
+</section>
